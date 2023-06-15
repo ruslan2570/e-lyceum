@@ -1,0 +1,28 @@
+services:
+  php-apache-environment:
+    container_name: liceum-site
+    image: e-liceum
+    volumes:
+      - ./:/var/www/html/
+    ports:
+      - '8000:80'
+  db:
+        container_name: eliceum_db
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+            MYSQL_DATABASE: eliceum_db
+            MYSQL_USER: MYSQL_USER
+            MYSQL_PASSWORD: MYSQL_PASSWORD
+        ports:
+            - "9906:3306"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+        - '8080:80'
+    restart: always
+    environment:
+        PMA_HOST: db
+    depends_on:
+        - db
