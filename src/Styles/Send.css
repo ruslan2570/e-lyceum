@@ -6,7 +6,7 @@
 }
 
 .main {
-    background-image: url(Rectangle\ 63.png);
+    background-image: url(../Rectangle\ 63.png);
     background-repeat: no-repeat;
     height: 90vh;
     background-position: center;
@@ -53,7 +53,7 @@
     border: solid 2px #af8e60;
 }
 
-.login {
+.login_journal {
     width: 253px;
     height: 19px;
     border-radius: 15px;
@@ -77,7 +77,7 @@
     border: solid 2px #af8e60;
 }
 
-.teacher {
+.teacher_select {
     margin-top: 18px;
     width: 705px;
     height: 50px;
