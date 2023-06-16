@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    if (isset($params['value']) && !empty($params['valud'])) {
+    if (isset($params['value']) && !empty($params['value'])) {
         $add_class_query = "INSERT INTO class(value) VALUES ('$params[value]')";
         $result = mysqli_query($link, $add_class_query);
 

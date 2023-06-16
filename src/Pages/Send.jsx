@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import ServerUrl from "../Const/ServerUrl";
 import '../Styles/Send.css'
 
 const Send = () => {
@@ -7,6 +8,9 @@ const Send = () => {
     const [topicsList, setTopicsList] = useState([]);
     const [classesList, setClassesList] = useState([]);
     const [selectedTopic, setSelectedTopic] = useState(null);
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [login, setLogin] = useState("");
     const selectorClass = useRef(null);
 
 
@@ -30,15 +34,50 @@ const Send = () => {
     }, [location, topicsList]);
 
     const onTopicChange = (e) => {
-        
-        if(e.target.selectedOptions[0].id !== undefined){
+
+        if (e.target.selectedOptions[0].id !== undefined) {
             const topic = topicsList.filter(el => el.id === e.target.selectedOptions[0].id)[0];
             setSelectedTopic(topic);
             const topicClass = classesList.filter(el => el.id === topic.class_id)[0];
             const options = selectorClass.current.children;
             const thatOption = Array.from(options).filter(el => el.value === topicClass.value)[0];
-            console.log(thatOption.index);
             selectorClass.current.selectedIndex = thatOption.index;
+        }
+    }
+
+    const onChangeName = (e) => {
+        setName(e.target.value);
+    }
+
+    const onChangeSurname = (e) => {
+        setSurname(e.target.value);
+    }
+
+    const onChangeLogin = (e) => {
+        setLogin(e.target.value);
+    }
+
+    const send = () => {
+        if (name !== "" && surname !== "" && login !== "" && selectedTopic !== null) {
+            const selectedClass = classesList.filter(el => el.value === selectorClass.current.selectedOptions[0].value)[0].id;
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/javascript");
+
+            var raw = `{ "name": ${name}, "surname": ${surname}, "login": ${login}, "topic_id": ${selectedTopic.id}, "class_id": ${selectedClass} }`;
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch(`${ServerUrl}write.php`, requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
         }
     }
 
@@ -53,9 +92,9 @@ const Send = () => {
                         </p>
                     </div>
                     <div className="input">
-                        <input className="name" type="text" placeholder="Имя"></input>
-                        <input className="surname" type="text" placeholder="Фамилия"></input>
-                        <input className="login_journal" type="text" placeholder="Логин в эл. журнале"></input>
+                        <input className="name" type="text" value={name} onChange={e => onChangeName(e)} placeholder="Имя"></input>
+                        <input className="surname" type="text" value={surname} onChange={e => onChangeSurname(e)} placeholder="Фамилия"></input>
+                        <input className="login_journal" type="text" value={login} onChange={e => onChangeLogin(e)} placeholder="Логин в эл. журнале"></input>
                     </div>
                     <div className="class">
                         <select className="choose" name="class" ref={selectorClass} >
@@ -72,7 +111,7 @@ const Send = () => {
                         </select>
                     </div>
                     <div className="theme">
-                        <select className="teacher_select" name="theme" onChange={ e => onTopicChange(e)}>
+                        <select className="teacher_select" name="theme" onChange={e => onTopicChange(e)}>
                             {topicsList !== null &&
 
                                 topicsList.map(topic =>
@@ -85,7 +124,7 @@ const Send = () => {
                         </select>
                     </div>
                     <div className="button">
-                        <button className="send">отправить</button>
+                        <button className="send" onClick={() => send()}>отправить</button>
                     </div>
                 </div>
             </div>
