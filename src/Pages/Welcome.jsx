@@ -68,8 +68,8 @@ const Welcome = () => {
                     </ol>
                 </div>
                 <div className="button">
-                    <button className="low_class class" onClick={e => goToProblemList(e)}>4-5 классы</button>
-                    <button className="higth_class class" onClick={e => goToProblemList(e)}>8-10 классы</button>
+                    <button className="low_class class-btn" onClick={e => goToProblemList(e)}>4-5 классы</button>
+                    <button className="higth_class class-btn" onClick={e => goToProblemList(e)}>8-10 классы</button>
                 </div>
                 <div className="login">
                     <p className="login_text">Вход в систему</p>

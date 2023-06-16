@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import ServerUrl from '../Const/ServerUrl';
 import '../Styles/TopicsList.css';
 
 const TopicsList = () => {
@@ -18,7 +19,7 @@ const TopicsList = () => {
                 redirect: 'follow'
             };
 
-            fetch(`http://localhost:8000/api/topic.php?show=available&classes=${classes}`, requestOptions)
+            fetch(`${ServerUrl}topic.php?show=available&classes=${classes}`, requestOptions)
                 .then(response => response.text())
                 .then(result => JSON.parse(result))
                 .then(json => setTopicsList(json))
@@ -58,12 +59,11 @@ const TopicsList = () => {
                                         <td className="list_name theme">{topic['topic']}</td>
                                     </tr>
                                 ))}
-
                         </tbody>
                     </table>
 
                     <div className="button">
-                        <button className="button_regestration">Зарегистрироваться</button>
+                        <button className="button_regestration" onClick={() => navigate("/send", {state: {topicsList: topicsList}})}>Зарегистрироваться</button>
                     </div>
                 </>
             )
@@ -72,7 +72,6 @@ const TopicsList = () => {
             < div className="down"></div>
         </>
     )
-
 }
 
 export default TopicsList;
