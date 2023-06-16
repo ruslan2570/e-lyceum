@@ -25,18 +25,16 @@ const Welcome = () => {
 
         fetch(`${ServerUrl}auth.php`, requestOptions)
             .then(response => {
-                if(response.status === 200){
+                if (response.status === 200) {
                     if (e.target.className.split(' ').find(o => o === "low_class") !== undefined) {
-                        console.log("младшие классы");
-                        navigate("/problemsList", {classes: "low" } );
+                        navigate("/topicsList", { state: { classes: "low" } });
                     }
                     if (e.target.className.split(' ').find(o => o === "higth_class") !== undefined) {
-                        console.log("старшие классы");
-                        navigate("/problemsList", {classes: "high" });
+                        navigate("/topicsList", { state: { classes: "high" } });
                     }
-                } else{
+                } else {
                     alert("Введите верный пароль");
-                }   
+                }
             })
     }
 

@@ -141,8 +141,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $data = file_get_contents('php://input');
-    $params = json_decode($data, true);
+    // $data = file_get_contents('php://input');
+    // $params = json_decode($data, true);
+    $params = $_GET;
 
     if ($params['show'] == "available") {
         $topic_query = "SELECT\n"
