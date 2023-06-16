@@ -1,0 +1,120 @@
+* {
+    margin: 0 auto;
+    padding: 0;
+    background-color: #F9EAD2;
+
+}
+
+.main {
+    background-image: url(Rectangle\ 63.png);
+    background-repeat: no-repeat;
+    height: 90vh;
+    background-position: center;
+}
+
+.info {
+    width: 1081px;
+    height: 168px;
+    background: transparent;
+    display: flex;
+    flex-flow: column;
+    position: relative;
+    margin: 0 auto;
+    align-self: center;
+    top: 28%;
+}
+
+.title {
+    width: 877px;
+    height: 58px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.name {
+    margin-top: 40px;
+    margin-bottom: 12px;
+    width: 253px;
+    height: 19px;
+    border-radius: 15px;
+    padding: 13px 15px;
+    background-color: white;
+    border: solid 2px #af8e60;
+}
+
+.surname {
+    margin-bottom: 12px;
+    width: 253px;
+    height: 19px;
+    border-radius: 15px;
+    padding: 13px 15px;
+    background-color: white;
+    border: solid 2px #af8e60;
+}
+
+.login {
+    width: 253px;
+    height: 19px;
+    border-radius: 15px;
+    padding: 13px 15px;
+    background-color: white;
+    border: solid 2px #af8e60;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.choose {
+    margin-top: 12px;
+    border-radius: 15px;
+    background-color: white;
+    width: 281px;
+    height: 50px;
+    border: solid 2px #af8e60;
+}
+
+.teacher {
+    margin-top: 18px;
+    width: 705px;
+    height: 50px;
+    border-radius: 15px;
+    padding: 13px 15px;
+    background-color: white;
+    border: solid 2px #af8e60;
+}
+
+.list {
+    background-color: white;
+}
+
+.button {
+    width: 229px;
+    height: 55px;
+}
+
+.send {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    width: 229px;
+    height: 55px;
+    border-radius: 15px;
+    color: white;
+    background-color: #9A0809;
+    font-size: 18px;
+    align-items: center;
+}
+
+
+.down {
+    display: flex;
+    height: 92px;
+    width: 100%;
+    background-color: #9A0809;
+    bottom: 0;
+    background-image: none
+}

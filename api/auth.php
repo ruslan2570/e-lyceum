@@ -30,7 +30,6 @@ if (isset($params['token'])) {
 }
 
 if (!isset($login) && isset($password) && !isset($token)) {
-    echo "1";
     if ($password == "1234") {
         http_response_code(200);
     } else {

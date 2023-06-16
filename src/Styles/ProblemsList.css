@@ -1,0 +1,72 @@
+* {
+    margin: 0 auto;
+    padding: 0;
+    background-color: #F9EAD2;
+
+}
+
+body {
+    padding-top: 55px;
+}
+
+.title_name {
+    background-color: #A48150;
+    height: 63px;
+    font-size: 20px;
+}
+
+.title .title_name {
+    padding: 3px;
+    border: 1px solid black;
+}
+
+.list_name {
+    height: 83px;
+}
+
+.list .list_name {
+    padding: 3px;
+    border: 1px solid black;
+}
+
+.table {
+    border-collapse: collapse;
+
+}
+
+.class_item {
+    width: 115px;
+}
+
+.teacher {
+    width: 269px;
+    text-align: center;
+}
+
+.theme {
+    width: 579px;
+    text-align: center;
+}
+
+.button_regestration {
+    display: flex;
+    justify-content: center;
+    margin-top: 52px;
+    margin-bottom: 100px;
+    width: 229px;
+    height: 55px;
+    border-radius: 15px;
+    color: white;
+    background-color: #9A0809;
+    font-size: 18px;
+    align-items: center;
+}
+
+.down {
+    display: flex;
+    height: 92px;
+    width: 100%;
+    background-color: #9A0809;
+    bottom: 0;
+    background-image: none
+}

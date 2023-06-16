@@ -144,8 +144,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $data = file_get_contents('php://input');
     $params = json_decode($data, true);
 
-
-
     if ($params['show'] == "available") {
         $topic_query = "SELECT\n"
             . "    topic.id as id,\n"
@@ -204,7 +202,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         // Извлечение данных и сохранение их в ассоциативном массиве
         $data = array();
         while ($row = mysqli_fetch_assoc($topic_result)) {
-            $data[] = $row;
+            if(!isset($params['classes']) || empty($params['classes']) || $params['show'] == "all")
+            {
+                $data[] = $row;
+            }
+            else if($params['classes'] == "high"){
+                if($row['class'] > 5){
+                    $data[] = $row;
+                }
+            }
+            else if($params['classes'] = "low"){
+                if($row['class'] <= 5){
+                    $data[] = $row;
+                }
+            }
+                
         }
 
         // Преобразование данных в формат JSON

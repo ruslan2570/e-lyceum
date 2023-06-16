@@ -1,0 +1,87 @@
+* {
+    margin: 0 auto;
+    padding: 0;
+    background-color: #F9EAD2;
+
+}
+
+.main {
+    background-image: url(../Rectangle\ 63.png);
+    background-repeat: no-repeat;
+    height: 90vh;
+    background-position: center;
+}
+
+.info {
+    width: 1081px;
+    height: 168px;
+    background: transparent;
+    display: flex;
+    flex-flow: column;
+    position: relative;
+    margin: 0 auto;
+    align-self: center;
+    top: 28%;
+}
+
+.title {
+    width: 877px;
+    height: 58px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.instruction {
+    width: 751px;
+    height: 247px;
+    padding-top: 43px;
+    font-weight: 400;
+    font-size: 16px;
+
+}
+
+.button {
+    padding-top: 43px;
+    display: flex;
+    gap: 41px;
+
+}
+
+.class {
+    width: 164px;
+    height: 55px;
+    border-radius: 15px;
+    background-color: #a50a13;
+    border: solid 1px #a50a13;
+    color: #FAEADA;
+}
+
+.login_text {
+    padding-top: 12px;
+    width: 966px;
+}
+
+.password {
+    padding-top: 21px;
+    width: 979px;
+}
+
+.password_box {
+    background-color: white;
+    width: 264px;
+    height: 44px;
+    border-radius: 15px;
+    border: solid 2px #a48150;
+    padding-left: 10px;
+}
+
+.down {
+    position: fixed;
+    display: flex;
+    height: 92px;
+    width: 100%;
+    background-color: #9A0809;
+    bottom: 0;
+    background-image: none
+}
