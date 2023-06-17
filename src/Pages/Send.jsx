@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ServerUrl from "../Const/ServerUrl";
 import '../Styles/Send.css'
 
 const Send = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [topicsList, setTopicsList] = useState([]);
     const [classesList, setClassesList] = useState([]);
     const [selectedTopic, setSelectedTopic] = useState(null);
@@ -35,7 +36,7 @@ const Send = () => {
 
     const onTopicChange = (e) => {
 
-        if (e.target.selectedOptions[0].id !== undefined) {
+        if (e.target.selectedOptions[0].id !== "") {
             const topic = topicsList.filter(el => el.id === e.target.selectedOptions[0].id)[0];
             setSelectedTopic(topic);
             const topicClass = classesList.filter(el => el.id === topic.class_id)[0];
@@ -58,27 +59,35 @@ const Send = () => {
     }
 
     const send = () => {
+
         if (name !== "" && surname !== "" && login !== "" && selectedTopic !== null) {
             const selectedClass = classesList.filter(el => el.value === selectorClass.current.selectedOptions[0].value)[0].id;
 
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/javascript");
 
-            var raw = `{ "name": ${name}, "surname": ${surname}, "login": ${login}, "topic_id": ${selectedTopic.id}, "class_id": ${selectedClass} }`;
+            var obj = {
+                name: name,
+                surname: surname,
+                login: login,
+                topic_id: selectedTopic.id,
+                class_id: selectedClass
+            };
+
+            var jsonObj = JSON.stringify(obj);
 
             var requestOptions = {
-                method: 'POST',
+                method: 'PUT',
                 headers: myHeaders,
-                body: raw,
+                body: jsonObj,
                 redirect: 'follow'
             };
 
             fetch(`${ServerUrl}write.php`, requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
+                .then(response => response.status)
+                .then(status => navigate("/conclusion", { state: { code: status } }))
                 .catch(error => console.log('error', error));
-
-        }
+        } else { alert("Введите все данные") }
     }
 
     return (
@@ -112,6 +121,7 @@ const Send = () => {
                     </div>
                     <div className="theme">
                         <select className="teacher_select" name="theme" onChange={e => onTopicChange(e)}>
+                            <option className="list" >Выберите тему</option>
                             {topicsList !== null &&
 
                                 topicsList.map(topic =>
