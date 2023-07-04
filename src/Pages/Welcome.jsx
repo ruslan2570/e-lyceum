@@ -6,6 +6,11 @@ import "../Styles/Welcome.css";
 const Welcome = () => {
     const navigate = useNavigate();
     const [password, setPassword] = useState("");
+    const [selectedClass, setSelectedClass] = useState('');
+
+    const handleClassChange = e => {
+        setSelectedClass(e.target.value);
+    }
 
     const goToProblemList = e => {
 
@@ -26,16 +31,25 @@ const Welcome = () => {
         fetch(`${ServerUrl}auth.php`, requestOptions)
             .then(response => {
                 if (response.status === 200) {
-                    if (e.target.className.split(' ').find(o => o === "low_class") !== undefined) {
-                        navigate("/topicsList", { state: { classes: "low" } });
+                    if(selectedClass != ''){
+                        navigate("/topicsList", { state: { classes: selectedClass } });
                     }
-                    if (e.target.className.split(' ').find(o => o === "higth_class") !== undefined) {
-                        navigate("/topicsList", { state: { classes: "high" } });
+                    else{
+                        alert("Выберите класс");
                     }
+                    
+                    // switch(selectedClass){
+                    //     case "low_class":
+                    //         navigate("/topicsList", { state: { classes: "low" } });
+                    //         break;
+                    //     case "high_class":
+                    //         navigate("/topicsList", { state: { classes: "high" } });
+                    //         break;
+                    // }
                 } else {
                     alert("Введите верный пароль");
                 }
-            })
+            }).catch(x => alert("Ошибка соединения с сервером"));
     }
 
     return (
@@ -67,12 +81,20 @@ const Welcome = () => {
                         <li className="list_six">Для выбора завершения сеанса закройте текущую вкладку. </li>
                     </ol>
                 </div>
-                <div className="button">
-                    <button className="low_class class-btn" onClick={e => goToProblemList(e)}>4-5 классы</button>
-                    <button className="higth_class class-btn" onClick={e => goToProblemList(e)}>8-10 классы</button>
+
+                <div>
+                    <input type="radio" id="low-radio" value="low" checked={selectedClass === "low"} onChange={handleClassChange}/>
+                    <label htmlFor="low-radio">4-5 классы</label>
+
+                    <input type="radio" id="high-radio" value="high" checked={selectedClass === "high"} onChange={handleClassChange}/>
+                    <label htmlFor="high-radio">8-10 классы</label>
                 </div>
+                
                 <div className="login">
                     <p className="login_text">Вход в систему</p>
+                </div>
+                <div className="button">
+                    <button className="class-btn" onClick={e => goToProblemList(e)}>Войти</button>
                 </div>
                 <div className="password">
                     <input className="password_box" onChange={e => setPassword(e.target.value)} value={password} type="password" maxLength="25" size="40"></input>
