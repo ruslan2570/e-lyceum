@@ -61,12 +61,3 @@ body {
     font-size: 18px;
     align-items: center;
 }
-
-.down {
-    display: flex;
-    height: 92px;
-    width: 100%;
-    background-color: #9A0809;
-    bottom: 0;
-    background-image: none
-}

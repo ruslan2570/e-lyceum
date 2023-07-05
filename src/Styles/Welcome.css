@@ -13,7 +13,7 @@
 }
 
 .info {
-    width: 1081px;
+    width: 800px;
     height: 168px;
     background: transparent;
     display: flex;
@@ -34,19 +34,24 @@
 
 .instruction {
     width: 751px;
-    height: 247px;
+    /* height: 247px; */
     padding-top: 43px;
     font-weight: 400;
     font-size: 16px;
 
 }
 
-.button {
-    padding-top: 43px;
-    display: flex;
-    gap: 41px;
-    margin-top: 10px;
+.login_radio{
+    margin: 10px;
+}
 
+.login_radio > input{
+    margin: 10px;
+}
+
+.login_block{
+    display: flex;
+    justify-content: left;
 }
 
 .class-btn {
@@ -62,11 +67,10 @@
     padding-top: 12px;
     width: 966px;
 }
-
+/* 
 .password {
-    padding-top: 21px;
     width: 979px;
-}
+} */
 
 .password_box {
     background-color: white;
@@ -80,9 +84,16 @@
 .down {
     position: fixed;
     display: flex;
-    height: 92px;
+    height: 10%;
     width: 100%;
     background-color: #9A0809;
     bottom: 0;
     background-image: none
+}
+
+@media(max-height: 1000px){
+    .down{
+        
+        display: none;
+    }
 }

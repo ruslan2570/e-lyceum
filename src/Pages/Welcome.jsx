@@ -31,13 +31,13 @@ const Welcome = () => {
         fetch(`${ServerUrl}auth.php`, requestOptions)
             .then(response => {
                 if (response.status === 200) {
-                    if(selectedClass != ''){
+                    if (selectedClass != '') {
                         navigate("/topicsList", { state: { classes: selectedClass } });
                     }
-                    else{
+                    else {
                         alert("Выберите класс");
                     }
-                    
+
                     // switch(selectedClass){
                     //     case "low_class":
                     //         navigate("/topicsList", { state: { classes: "low" } });
@@ -49,7 +49,7 @@ const Welcome = () => {
                 } else {
                     alert("Введите верный пароль");
                 }
-            }).catch(x => alert("Ошибка соединения с сервером"));
+            }).catch(x => alert("Ошибка соединения с сервером: " + x));
     }
 
     return (
@@ -82,22 +82,28 @@ const Welcome = () => {
                     </ol>
                 </div>
 
-                <div>
-                    <input type="radio" id="low-radio" value="low" checked={selectedClass === "low"} onChange={handleClassChange}/>
-                    <label htmlFor="low-radio">4-5 классы</label>
 
-                    <input type="radio" id="high-radio" value="high" checked={selectedClass === "high"} onChange={handleClassChange}/>
-                    <label htmlFor="high-radio">8-10 классы</label>
-                </div>
-                
+
                 <div className="login">
                     <p className="login_text">Вход в систему</p>
-                </div>
-                <div className="button">
-                    <button className="class-btn" onClick={e => goToProblemList(e)}>Войти</button>
-                </div>
-                <div className="password">
-                    <input className="password_box" onChange={e => setPassword(e.target.value)} value={password} type="password" maxLength="25" size="40"></input>
+
+                    <div className="login_radio">
+                        <input type="radio" id="low-radio" value="low" checked={selectedClass === "low"} onChange={handleClassChange} />
+                        <label htmlFor="low-radio">4-5 классы</label>
+
+                        <input type="radio" id="high-radio" value="high" checked={selectedClass === "high"} onChange={handleClassChange} />
+                        <label htmlFor="high-radio">8-10 классы</label>
+                    </div>
+
+                    <div className="login_block">
+                        <div className="password">
+                            <input className="password_box" placeholder="Пароль" onChange={e => setPassword(e.target.value)} value={password} type="password" maxLength="25" size="40"></input>
+                        </div>
+
+                        <div className="button">
+                            <button className="class-btn" onClick={e => goToProblemList(e)}>Войти</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="down"></div>
