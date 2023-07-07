@@ -3,8 +3,6 @@ import ServerUrl from '../Const/ServerUrl';
 class AuthService {
 
   login(username, password) {
-
-    alert('логин');
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -21,17 +19,49 @@ class AuthService {
     };
 
     fetch(ServerUrl + "auth.php", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
+      .then(response => {
+        if (response.status === 200) {
+          return response.text();
+        } else {
+          return false;
+        }
+
+      }
+      )
+      .then(text => {
+        if (text) {
+          let json = JSON.parse(text);
+          localStorage.setItem('token', json.token);
+        } else {
+          alert("Неверный логин или пароль");
+        }
+
+      })
       .catch(error => console.log('error', error));
 
-      // localStorage.setItem('token', response.data.token);
-      
+    // localStorage.setItem('token', response.data.token);
+
   }
 
-  // login(token) {
+  validateToken(token) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-  // }
+    var raw = JSON.stringify({
+      "token": token
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch(ServerUrl + "auth.php", requestOptions)
+      .then(response => response.status === 200)
+      .catch(error => console.log('error', error));
+  }
 
   logout() {
     localStorage.removeItem('token');
@@ -42,7 +72,11 @@ class AuthService {
   }
 
   isAuthenticated() {
-    return !!this.getToken();
+    let token = this.getToken();
+    if(token != null){
+      return this.validateToken(token);
+    }
+    return false;
   }
 }
 

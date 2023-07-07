@@ -70,23 +70,12 @@ if (isset($login) && isset($password) && !isset($token)) {
     }
 }
 
-if (!isset($login) && !isset($password) && isset($token)) {
-
-    
-    // validateToken($token, $link);
-
-    $get_session_query = "SELECT * FROM session WHERE token = '$token'";
-
-    $session_result = mysqli_query($link, $get_session_query);
-
-    if(mysqli_num_rows($session_result) != 0){
-        $cur_date = date(strtotime(date("Y-m-d")));
-        $session_expiration_date = strtotime(mysqli_fetch_assoc($session_result)['expiration_date']);
-
-        if($session_expiration_date > $cur_date){
-            http_response_code(200);
-            exit;
-        }
+if (!isset($login) && !isset($password) && isset($token)) {    
+  
+    if(validateToken($token, $link)){
+        http_response_code(200);
+    } else{
+        http_response_code(403);
     }
-    http_response_code(403);
+    
 }

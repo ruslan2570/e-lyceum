@@ -5,7 +5,7 @@ import AuthService from '../Services/AuthService';
 // import '../Styles/Send.css'
 
 const Login = () => {
-
+    const navigate = useNavigate();
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
@@ -20,7 +20,21 @@ const Login = () => {
 
     const makeLogin = () => {
         AuthService.login(login, password);
+        // checkAuth();
     }
+
+    const checkAuth = () => {
+        alert(AuthService.validateToken("eeee"));
+
+        // alert(AuthService.isAuthenticated());
+        // if(AuthService.isAuthenticated()){
+        //     navigate("/admin");
+        // }
+    }
+
+    useEffect(() => {
+        checkAuth();
+    },[])
 
     return (
         <>

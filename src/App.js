@@ -6,6 +6,7 @@ import Send from './Pages/Send';
 import Consolusion from './Pages/Conclusion';
 import Login from './Pages/Login';
 
+
 function App() {
 
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path='/send' element={<Send />} ></Route>
       <Route path='/conclusion' element={<Consolusion />} ></Route>
       <Route path='/login' element={<Login />} ></Route>
+      {/* <Route path='/admin' element={<Admin />}></Route> */}
     </Routes>
   );
 }
