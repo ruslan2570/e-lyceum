@@ -1,4 +1,5 @@
 <?php
+
 require_once('../token_validator.php');
 $config = include '../db_config.php';
 
@@ -15,7 +16,6 @@ if ($link === false) {
 
 $data = file_get_contents('php://input');
 $params = json_decode($data, true);
-
 
 if (isset($params['login'])) {
     $login = $params['login'];
@@ -53,7 +53,7 @@ if (isset($login) && isset($password) && !isset($token)) {
         $currentDateTime = date_create();
         // Прибавляем две недели
         $futureDateTime = date_modify($currentDateTime, '+4 weeks');
-        // Форматируем дату и время в строку, соответствующую формату вашей базы данных
+        // Форматируем дату и время в строку, соответствующую формату базы данных
         $formattedDateTime = date_format($futureDateTime, 'Y-m-d H:i:s');
 
         $add_token_query = "INSERT INTO session(user_id, token, expiration_date) VALUES($user_id, '$token', '$formattedDateTime')";
@@ -71,15 +71,22 @@ if (isset($login) && isset($password) && !isset($token)) {
 }
 
 if (!isset($login) && !isset($password) && isset($token)) {
+
     
+    // validateToken($token, $link);
+
     $get_session_query = "SELECT * FROM session WHERE token = '$token'";
 
     $session_result = mysqli_query($link, $get_session_query);
 
     if(mysqli_num_rows($session_result) != 0){
-        http_response_code(200);
-    } else{
-        http_response_code(403);
-    }
+        $cur_date = date(strtotime(date("Y-m-d")));
+        $session_expiration_date = strtotime(mysqli_fetch_assoc($session_result)['expiration_date']);
 
+        if($session_expiration_date > $cur_date){
+            http_response_code(200);
+            exit;
+        }
+    }
+    http_response_code(403);
 }
