@@ -41,15 +41,15 @@
 
 }
 
-.login_radio{
+.login_radio {
     margin: 10px;
 }
 
-.login_radio > input{
+.login_radio>input {
     margin: 10px;
 }
 
-.login_block{
+.login_block {
     display: flex;
     justify-content: left;
 }
@@ -67,6 +67,7 @@
     padding-top: 12px;
     width: 966px;
 }
+
 /* 
 .password {
     width: 979px;
@@ -91,9 +92,22 @@
     background-image: none
 }
 
-@media(max-height: 1000px){
-    .down{
-        
+.login_input {
+    margin-top: 25px;
+    margin-left: 12px;
+    margin-bottom: 12px;
+    width: 253px;
+    height: 19px;
+    border-radius: 15px;
+    padding: 13px 15px;
+    background-color: white;
+    border: solid 2px #af8e60;
+}
+
+
+@media(max-height: 1000px) {
+    .down {
+
         display: none;
     }
 }

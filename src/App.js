@@ -4,6 +4,7 @@ import Welcome from './Pages/Welcome';
 import TopicsList from './Pages/TopicsList';
 import Send from './Pages/Send';
 import Consolusion from './Pages/Conclusion';
+import Login from './Pages/Login';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <Route path='/topicsList' element={<TopicsList/>} ></Route>
       <Route path='/send' element={<Send />} ></Route>
       <Route path='/conclusion' element={<Consolusion />} ></Route>
+      <Route path='/login' element={<Login />} ></Route>
     </Routes>
   );
 }
