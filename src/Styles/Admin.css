@@ -1,0 +1,32 @@
+.admin_wrap{
+    /* display: flex;
+    flex-direction: column;
+     */
+}
+
+.admin_header{
+    display: flex;
+    justify-content: start;
+
+    
+}
+
+.admin_logo{
+    margin-left: 15px;
+    margin-right: 0px;
+    height: 100px;
+    width: 100px;
+}
+
+.admin_nav{
+    display: flex;
+    font-size: 16px;
+    align-items: center;
+}
+
+.admin_nav > a{
+    color: #010101;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-decoration: none;
+}

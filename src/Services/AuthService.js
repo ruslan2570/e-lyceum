@@ -25,7 +25,6 @@ class AuthService {
         } else {
           return false;
         }
-
       }
       )
       .then(text => {
@@ -43,7 +42,7 @@ class AuthService {
 
   }
 
-  validateToken(token) {
+  async validateToken(token) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -58,9 +57,14 @@ class AuthService {
       redirect: 'follow'
     };
 
-    fetch(ServerUrl + "auth.php", requestOptions)
-      .then(response => response.status === 200)
-      .catch(error => console.log('error', error));
+    try {
+      const response = await fetch(ServerUrl + "auth.php", requestOptions);
+      return response.status === 200;
+    } catch (error) {
+      console.log('error', error);
+      return false;
+    }
+
   }
 
   logout() {
@@ -73,7 +77,7 @@ class AuthService {
 
   isAuthenticated() {
     let token = this.getToken();
-    if(token != null){
+    if (token != null) {
       return this.validateToken(token);
     }
     return false;

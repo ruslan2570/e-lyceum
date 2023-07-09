@@ -19,17 +19,17 @@ const Login = () => {
     }
 
     const makeLogin = () => {
-        AuthService.login(login, password);
+        console.log(AuthService.login(login, password))
+        
         // checkAuth();
     }
 
-    const checkAuth = () => {
-        alert(AuthService.validateToken("eeee"));
+    const checkAuth = async() => {
 
-        // alert(AuthService.isAuthenticated());
-        // if(AuthService.isAuthenticated()){
-        //     navigate("/admin");
-        // }
+        const result = await AuthService.isAuthenticated();
+        if(result){
+            navigate("/admin");
+        }
     }
 
     useEffect(() => {
