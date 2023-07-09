@@ -18,11 +18,9 @@ const Admin = () => {
                     <Link to="topics">Темы</Link>
                     <Link to="teachers">Учителя</Link>
                     <Link to="funcs">Функции</Link>
-
                 </nav>
 
             </div>
-
 
             <Outlet></Outlet>
 
