@@ -2,15 +2,14 @@ import TableBody from "./TableBody";
 import TableHead from "./TableHead";
 import { useSortableTable } from "../useSortableTable";
 
-const Table = ({ caption, data, columns }) => {
+const Table = ({ data, columns, makeFree }) => {
   const [tableData, handleSorting] = useSortableTable(data, columns);
 
   return (
     <>
       <table className="table">
-        <caption>{caption}</caption>
         <TableHead {...{ columns, handleSorting }} />
-        <TableBody {...{ columns, tableData }} />
+        <TableBody {...{ columns, tableData, makeFree }} />
       </table>
     </>
   );

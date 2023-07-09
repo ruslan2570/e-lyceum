@@ -6,8 +6,8 @@
 
 .admin_header{
     display: flex;
-    justify-content: start;
-
+    justify-content: flex-start;
+    margin-bottom: 30px;
     
 }
 
@@ -32,12 +32,10 @@
     text-decoration: none;
 }
 
-
 .table {
-    width: 100%;
+    width: 95%;
     border-spacing: 0;
   }
-
   
 .table th {
     background: #fff;
@@ -47,18 +45,19 @@
     text-align: left;
   }
   
-  .table th.up {
+  .table .th_up {
     background-image: url("../img/arrows/up_arrow.png");
   }
-  .table th.down {
+  .table .th_down {
     background-image: url("../img/arrows/down_arrow.png");
   }
-  .table th.default {
+  .table .th_default {
     background-image: url("../img/arrows/default.png");
   }
-  th.up,
-  th.default,
-  th.down {
+
+  th.th_up,
+  th.th_default,
+  th.th_down {
     cursor: pointer;
     background-repeat: no-repeat;
     background-position: center right;

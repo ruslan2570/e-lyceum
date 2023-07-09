@@ -8,8 +8,6 @@ const TopicsList = () => {
     const navigate = useNavigate();
     const [topicsList, setTopicsList] = useState([]);
 
-
-
     useEffect(() => {
 
         const loadTopics = (classes) => {

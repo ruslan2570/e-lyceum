@@ -1,4 +1,7 @@
-const TableBody = ({ tableData, columns }) => {
+const TableBody = ({ tableData, columns, makeFree }) => {
+
+  
+
     return (
       <tbody>
         {tableData.map((data) => {
@@ -8,6 +11,10 @@ const TableBody = ({ tableData, columns }) => {
                 const tData = data[accessor] ? data[accessor] : "——";
                 return <td key={accessor}>{tData}</td>;
               })}
+              
+              <td>
+              { data.selection_date !== null &&  <button topic_id={data.id} onClick={makeFree}>Освободить</button> }
+              </td> 
             </tr>
           );
         })}

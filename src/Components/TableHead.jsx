@@ -17,10 +17,10 @@ const TableHead = ({ columns, handleSorting }) => {
         {columns.map(({ label, accessor, sortable }) => {
           const cl = sortable
             ? sortField === accessor && order === "asc"
-              ? "up"
+              ? "th_up"
               : sortField === accessor && order === "desc"
-              ? "down"
-              : "default"
+              ? "th_down"
+              : "th_default"
             : "";
           return (
             <th
@@ -30,8 +30,13 @@ const TableHead = ({ columns, handleSorting }) => {
             >
               {label}
             </th>
+            
           );
-        })}
+        })
+        }
+                <th>
+              Освободить тему
+            </th>
       </tr>
     </thead>
   );
