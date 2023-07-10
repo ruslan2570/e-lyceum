@@ -1,32 +1,52 @@
 import { useEffect, useState } from 'react';
 import Table from "../../Components/Table";
 import ServerUrl from "../../Const/ServerUrl";
+import AuthService from '../../Services/AuthService';
 
 const Main = () => {
   const [selectedShow, setSelectedShow] = useState(null);
   const [topics, setTopics] = useState([]);
 
-  const makeFree = (e) => {
+  const makeFree = async(e) => {
+    let topic = topics.find(x => x.id == e.target.getAttribute('topic_id'));
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Bearer eeeeb");
+    let confirmation = window.confirm(`Вы уверены, что освободить тему "${topic.topic}"?`);
 
-    var raw = "{id: }" + e.target.getAttribute('topic_id');
+    if (confirmation) {
+      // var myHeaders = new Headers();
+      // myHeaders.append("Content-Type", "application/json");
+      // myHeaders.append("Authorization", "Bearer " + AuthService.getToken());
 
-    var requestOptions = {
-      method: 'PUT',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
+      
+      var myHeaders = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + AuthService.getToken()
+      }
 
-    fetch(ServerUrl + "topic.php", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
 
-    updateTopics(selectedShow);
+      var raw = `{"id": ${e.target.getAttribute('topic_id')}}`;
+
+      var requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      try{
+        let response = await fetch(ServerUrl + "topic.php", requestOptions);
+        // alert(response.status);
+        if(response.status === 200){
+          alert("Тема удалена");
+        } else{
+          alert("Произошла ошибка");
+        }
+      } catch(error){
+        console.log("Произошла ошибка: ", error);
+      }
+      
+      updateTopics(selectedShow);
+    }
   }
 
 
@@ -72,7 +92,7 @@ const Main = () => {
 
   return (
     <>
-      <select value={selectedShow} onChange={e => setSelectedShow(e.target.value)}>
+      <select value={selectedShow} onChange={e => setSelectedShow(e.target.value)} className='select_show'>
         <option value="all">Все</option>
         <option value="busy">Занятые</option>
         <option value="available">Свободные</option>

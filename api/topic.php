@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Проверка токена
     if (!validateToken($token, $link)) {
+        
         // Токен не действителен, выполнение требуемых операций
         http_response_code(403);
         $response = [
@@ -109,15 +110,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $headers = apache_request_headers();
     if (isset($headers['Authorization'])) {
         $authHeader = $headers['Authorization'];
+        
         // Извлечение токена из заголовка
         $token = str_replace('Bearer ', '', $authHeader);
     }
-
 
     // Проверка токена
     if (!validateToken($token, $link)) {
         // Токен не действителен, выполнение требуемых операций
         http_response_code(403);
+
         $response = [
             'error' => 'Ошибка авторизации'
         ];
