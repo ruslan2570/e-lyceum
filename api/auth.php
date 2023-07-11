@@ -30,7 +30,12 @@ if (isset($params['token'])) {
 }
 
 if (!isset($login) && isset($password) && !isset($token)) {
-    if ($password == "1234") {
+
+    $get_password_query = 'SELECT content FROM setting WHERE property LIKE "user_password"';
+    $password_result = mysqli_query($link, $get_password_query);
+    $fetched_password = mysqli_fetch_row($password_result)[0];
+
+    if ($password == $fetched_password) {
         http_response_code(200);
     } else {
         http_response_code(403);
@@ -72,6 +77,8 @@ if (isset($login) && isset($password) && !isset($token)) {
 
 if (!isset($login) && !isset($password) && isset($token)) {    
   
+
+
     if(validateToken($token, $link)){
         http_response_code(200);
     } else{

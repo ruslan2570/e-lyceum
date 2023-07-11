@@ -88,3 +88,11 @@ th.th_down {
   margin-left: 50px;
   margin-bottom: 15px;
 }
+
+.topic_container{
+  display: flex;
+}
+
+.add_topic_container{
+
+}

@@ -44,8 +44,8 @@ const TopicsList = () => {
                         <tbody>
                             <tr className="title">
                                 <th className="title_name">Класс</th>
-                                <th className="title_name">ФИО преподователя (полностью)</th>
-                                <th className="title_name">Тема выпускной квалификационной работы</th>
+                                <th className="title_name">ФИО преподавателя</th>
+                                <th className="title_name">Тема проектной работы</th>
                             </tr>
 
                             {topicsList.map(

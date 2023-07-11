@@ -105,10 +105,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $class_result = mysqli_query($link, $class_query);
 
     // Проверка наличия результатов
-    if ($topic_result) {
+    if ($class_result) {
         // Извлечение данных и сохранение их в ассоциативном массиве
         $data = array();
-        while ($row = mysqli_fetch_assoc($topic_result)) {
+        while ($row = mysqli_fetch_assoc($class_result)) {
             $data[] = $row;
         }
 

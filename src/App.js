@@ -7,6 +7,7 @@ import Consolusion from './Pages/Conclusion';
 import Login from './Pages/Login';
 import Admin from './Pages/Admin';
 import Main from './Pages/Admin/Main';
+import Topics from './Pages/Admin/Topics';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
       <Route path='/login' element={<Login />} ></Route>
       <Route path='/admin/*' element={<Admin />}>
         <Route path="" element={<Main />}></Route>
-        <Route path="topics" element={<p>Темы</p>}></Route>
+        <Route path="topics" element={<Topics />}></Route>
         <Route path="teachers" element={<p>Учителя</p>}></Route>
         <Route path="funcs" element={<p>Фунции</p>}></Route>
       </Route>
