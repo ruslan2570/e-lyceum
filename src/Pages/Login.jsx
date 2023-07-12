@@ -18,10 +18,10 @@ const Login = () => {
         }
     }
 
-    const makeLogin = () => {
-        console.log(AuthService.login(login, password))
+    const makeLogin = async() => {
+        await AuthService.login(login, password);
         
-        // checkAuth();
+        checkAuth();
     }
 
     const checkAuth = async() => {

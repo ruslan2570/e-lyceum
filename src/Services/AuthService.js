@@ -2,13 +2,13 @@ import ServerUrl from '../Const/ServerUrl';
 
 class AuthService {
 
-  login(username, password) {
+  async login(username, password) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      "login": password,
-      "password": username
+      "login": username,
+      "password": password
     });
 
     var requestOptions = {
@@ -18,7 +18,7 @@ class AuthService {
       redirect: 'follow'
     };
 
-    fetch(ServerUrl + "auth.php", requestOptions)
+    await fetch(ServerUrl + "auth.php", requestOptions)
       .then(response => {
         if (response.status === 200) {
           return response.text();

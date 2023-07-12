@@ -138,3 +138,8 @@ button {
   height: 25px;
   width: 100px;
 }
+
+.link_logout{
+  color: #a50a13 !important;
+  cursor: pointer;
+}
