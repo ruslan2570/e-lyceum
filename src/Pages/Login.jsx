@@ -1,8 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import ServerUrl from "../Const/ServerUrl";
+import { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AuthService from '../Services/AuthService';
-// import '../Styles/Send.css'
 
 const Login = () => {
     const navigate = useNavigate();
@@ -24,17 +22,18 @@ const Login = () => {
         checkAuth();
     }
 
-    const checkAuth = async() => {
+    const checkAuth = useCallback( async() => {
 
         const result = await AuthService.isAuthenticated();
         if(result){
             navigate("/admin");
         }
-    }
+    }, [navigate]);
 
     useEffect(() => {
+
         checkAuth();
-    },[])
+    },[checkAuth])
 
     return (
         <>
