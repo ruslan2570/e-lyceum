@@ -37,7 +37,7 @@ const Main = () => {
         let response = await fetch(ServerUrl + "topic.php", requestOptions);
         // alert(response.status);
         if(response.status === 200){
-          alert("Тема удалена");
+          alert("Тема освобождена");
         } else{
           alert("Произошла ошибка");
         }
