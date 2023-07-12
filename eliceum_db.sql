@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: db
--- Время создания: Июн 17 2023 г., 11:37
--- Версия сервера: 8.0.32
--- Версия PHP: 8.1.15
+-- Host: db
+-- Generation Time: Jul 12, 2023 at 09:41 PM
+-- Server version: 8.0.32
+-- PHP Version: 8.1.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `eliceum_db`
+-- Database: `eliceum_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -34,16 +34,16 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Дамп данных таблицы `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `login`, `password`) VALUES
-(1, 'admin', 'admin');
+(1, 'steps', 'stair');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `class`
+-- Table structure for table `class`
 --
 
 CREATE TABLE `class` (
@@ -52,19 +52,26 @@ CREATE TABLE `class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Дамп данных таблицы `class`
+-- Dumping data for table `class`
 --
 
 INSERT INTO `class` (`id`, `value`) VALUES
 (1, 1),
 (2, 2),
 (3, 5),
-(4, 8);
+(4, 8),
+(5, 3),
+(6, 4),
+(8, 6),
+(9, 7),
+(10, 9),
+(11, 10),
+(12, 11);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `session`
+-- Table structure for table `session`
 --
 
 CREATE TABLE `session` (
@@ -75,19 +82,36 @@ CREATE TABLE `session` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Дамп данных таблицы `session`
+-- Dumping data for table `session`
 --
 
 INSERT INTO `session` (`id`, `token`, `user_id`, `expiration_date`) VALUES
-(26, 'eeee', 1, '2023-06-29'),
-(32, '669583504a695b66cc68e503b91c2bf5', 1, '2023-07-13'),
-(33, 'a85dba69a13d9944c2709dec64954c89', 1, '2023-07-13'),
-(34, 'fdedf904af8d58abb1d4106b0ff4f1a5', 1, '2023-07-13');
+(869, '8053a9f580cb351e590a240abb93d629', 1, '2023-08-10'),
+(870, 'fb8728b40f7e4e32701140d7687d9358', 1, '2023-08-10');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `student`
+-- Table structure for table `setting`
+--
+
+CREATE TABLE `setting` (
+  `id` int NOT NULL,
+  `property` varchar(64) NOT NULL,
+  `content` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `setting`
+--
+
+INSERT INTO `setting` (`id`, `property`, `content`) VALUES
+(1, 'user_password', '1234');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student`
 --
 
 CREATE TABLE `student` (
@@ -99,17 +123,15 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Дамп данных таблицы `student`
+-- Dumping data for table `student`
 --
 
 INSERT INTO `student` (`id`, `firstname`, `lastname`, `login`, `class_id`) VALUES
-(1, 'Иван', 'Иванов', 'Иванов5_1', 1),
-(28, 'Петров', 'Иван', 'PetrovI', 4),
-(29, '2', '2', '2', 1),
-(30, 'тест1', 'тест1', 'тест1', 4);
+(34, 'Роман', 'Кочетков', 'kochan', 3),
+(35, 'Анатолий', 'Царёв', 'plasticine', 4);
 
 --
--- Триггеры `student`
+-- Triggers `student`
 --
 DELIMITER $$
 CREATE TRIGGER `delete_student` BEFORE DELETE ON `student` FOR EACH ROW BEGIN
@@ -123,7 +145,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `teacher`
+-- Table structure for table `teacher`
 --
 
 CREATE TABLE `teacher` (
@@ -132,19 +154,20 @@ CREATE TABLE `teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Дамп данных таблицы `teacher`
+-- Dumping data for table `teacher`
 --
 
 INSERT INTO `teacher` (`id`, `fullname`) VALUES
 (1, 'Иванова Мария Ивановна'),
 (2, 'Петрова Татьяна Владимировна'),
 (6, 'Скуратова Ольга Викторовна'),
-(8, 'Митрофанова Ольга Викторовна');
+(8, 'Митрофанова Ольга Викторовна'),
+(10, 'Джонатан Стетхэм');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `topic`
+-- Table structure for table `topic`
 --
 
 CREATE TABLE `topic` (
@@ -157,21 +180,25 @@ CREATE TABLE `topic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Дамп данных таблицы `topic`
+-- Dumping data for table `topic`
 --
 
 INSERT INTO `topic` (`id`, `name`, `teacher_id`, `student_id`, `class_id`, `selection_date`) VALUES
-(1, 'Развитие краткосрочного кредитования в комерческом банке', 1, 29, 1, '2023-06-17 08:30:54'),
-(2, 'Порядок работы с сомнительными, неплатежеспособными и имеющими признаки подделки денежными знаками Банка России в кредитных организациях ', 1, 1, 1, '2023-06-17 10:47:58'),
+(1, 'Развитие краткосрочного кредитования в комерческом банке', 1, NULL, 1, NULL),
+(2, 'Порядок работы с сомнительными, неплатежеспособными и имеющими признаки подделки денежными знаками Банка России в кредитных организациях ', 1, NULL, 1, NULL),
 (3, 'Проектирование архитектуры высоконагруженных приложений', 2, NULL, 1, NULL),
-(4, 'Программирование микроконтроллеров STM32', 2, NULL, 3, NULL),
-(5, 'Проектирование парты', 2, 28, 4, '2023-06-17 08:29:53'),
+(4, 'Программирование микроконтроллеров STM32', 2, 34, 3, '2023-07-12 21:06:11'),
+(5, 'Проектирование парты', 2, NULL, 4, NULL),
 (6, 'Самые необычные театры в Москве', 8, NULL, 4, NULL),
-(7, 'По следам Шерлока Холмса, или методы решения логических задач', 2, 30, 4, '2023-06-17 08:35:20'),
-(8, 'Гастрономическая Москва', 1, NULL, 2, NULL);
+(7, 'По следам Шерлока Холмса, или методы решения логических задач', 2, NULL, 4, NULL),
+(8, 'Гастрономическая Москва', 1, NULL, 2, NULL),
+(16, '\"Панки хой!\" или как зарождался тамбовский панк-рок', 1, 35, 3, '2023-07-11 00:39:47'),
+(17, 'Промизы в JS', 6, NULL, 5, NULL),
+(23, 'Самые известные цитаты Джонатана Стетхэма', 10, NULL, 4, NULL),
+(24, 'Загрузка сайта на хостинг', 10, NULL, 12, NULL);
 
 --
--- Триггеры `topic`
+-- Triggers `topic`
 --
 DELIMITER $$
 CREATE TRIGGER `clear_date` BEFORE UPDATE ON `topic` FOR EACH ROW BEGIN
@@ -183,43 +210,49 @@ $$
 DELIMITER ;
 
 --
--- Индексы сохранённых таблиц
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `class`
+-- Indexes for table `class`
 --
 ALTER TABLE `class`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `session`
+-- Indexes for table `session`
 --
 ALTER TABLE `session`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Индексы таблицы `student`
+-- Indexes for table `setting`
+--
+ALTER TABLE `setting`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `student`
 --
 ALTER TABLE `student`
   ADD PRIMARY KEY (`id`),
   ADD KEY `class_id` (`class_id`);
 
 --
--- Индексы таблицы `teacher`
+-- Indexes for table `teacher`
 --
 ALTER TABLE `teacher`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `topic`
+-- Indexes for table `topic`
 --
 ALTER TABLE `topic`
   ADD PRIMARY KEY (`id`),
@@ -228,63 +261,69 @@ ALTER TABLE `topic`
   ADD KEY `topic_ibfk_3` (`teacher_id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT для таблицы `class`
+-- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT для таблицы `session`
+-- AUTO_INCREMENT for table `session`
 --
 ALTER TABLE `session`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=871;
 
 --
--- AUTO_INCREMENT для таблицы `student`
+-- AUTO_INCREMENT for table `setting`
+--
+ALTER TABLE `setting`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
--- AUTO_INCREMENT для таблицы `teacher`
+-- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT для таблицы `topic`
+-- AUTO_INCREMENT for table `topic`
 --
 ALTER TABLE `topic`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- Ограничения внешнего ключа сохраненных таблиц
+-- Constraints for dumped tables
 --
 
 --
--- Ограничения внешнего ключа таблицы `session`
+-- Constraints for table `session`
 --
 ALTER TABLE `session`
   ADD CONSTRAINT `session_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `student`
+-- Constraints for table `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `topic`
+-- Constraints for table `topic`
 --
 ALTER TABLE `topic`
   ADD CONSTRAINT `topic_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
