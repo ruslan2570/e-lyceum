@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Outlet, Route, Routes, useNavigate, NavLink } from "react-router-dom";
 import ServerUrl from '../Const/ServerUrl';
 import '../Styles/Admin.css';
 import logo from '../img/stupeni.png';
@@ -20,13 +20,24 @@ const Admin = () => {
                 <img src={logo} className="admin_logo"></img>
 
                 <nav className="admin_nav">
-                    <Link to="/admin/">Главная</Link>
-                    <Link to="topics">Темы</Link>
-                    <Link to="teachers">Учителя</Link>
-                    <Link to="funcs">Функции</Link>
-                    <a className="link_logout" onClick={() => {logout()}}>Выход</a>
+                    <NavLink
+                        className={({ isActive }) =>
+                            isActive ? "active_navlink" : ""
+                        } to="/admin/">Главная</NavLink>
+                    <NavLink className={({ isActive }) =>
+                        isActive ? "active_navlink" : ""
+                    } to="topics">Темы</NavLink>
+                    <NavLink className={({ isActive }) =>
+                        isActive ? "active_navlink" : ""
+                    } to="teachers">Учителя</NavLink>
+                    <NavLink className={({ isActive }) =>
+                        isActive ? "active_navlink" : ""
+                    } to="funcs">Функции</NavLink>
+                    <a className="link_logout" onClick={() => { logout() }}>Выход</a>
                 </nav>
-              
+
+
+
 
             </div>
 
