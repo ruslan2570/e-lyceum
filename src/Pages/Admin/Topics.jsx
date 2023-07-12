@@ -5,11 +5,13 @@ import AuthService from '../../Services/AuthService';
 const Topics = () => {
     const [teachersList, setTeachersList] = useState(null);
     const [classesList, setClassesList] = useState(null);
+    const [topicList, setTopicList] = useState(null);
     const [selectedTeacher, setSelectedTeacher] = useState(null);
     const [selectedClass, setSelectedClass] = useState(null);
     const [topicName, setTopicName] = useState("");
 
-    useEffect(() => {
+    const loadData = () => {
+
         var requestOptions = {
             method: 'GET',
             redirect: 'follow'
@@ -26,6 +28,16 @@ const Topics = () => {
             .then(result => JSON.parse(result))
             .then(obj => setClassesList(obj))
             .catch(err => console.log("error: ", err));
+
+        fetch(ServerUrl + "topic.php", requestOptions)
+            .then(response => response.text())
+            .then(result => JSON.parse(result))
+            .then(obj => setTopicList(obj))
+            .catch(err => console.log("error: ", err));
+    }
+
+    useEffect(() => {
+        loadData();
     }, []);
 
     const onSelectedTeacher = (e) => {
@@ -50,9 +62,9 @@ const Topics = () => {
         }
 
         var raw = JSON.stringify({
-            "name": "Это база",
-            "teacher_id": 6,
-            "class_id": 1
+            "name": topicName,
+            "teacher_id": selectedTeacher.id,
+            "class_id": selectedClass.id
         });
 
         var requestOptions = {
@@ -64,13 +76,47 @@ const Topics = () => {
 
         fetch("http://localhost:8000/api/topic.php", requestOptions)
             .then(response => {
-                if (response.code === 201) {
+                if (response.status === 201) {
                     alert("Тема успешно добавлена");
                 } else {
                     alert("При добавлении произошла ошибка");
                 }
             })
             .catch(error => console.log('error', error));
+
+        loadData();
+        setTopicName("");
+    }
+
+    const deleteTopic = (e) => {
+        const topic_id = e.target.getAttribute("topic_id");
+        const topic = topicList.find(x => x.id === topic_id);
+        let confirmation = window.confirm(`Вы уверены, что освободить тему "${topic.topic}"?`);
+
+        if (confirmation) {
+            const myHeaders = {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + AuthService.getToken()
+            }
+
+            var raw = JSON.stringify({
+                "id": topic_id
+            });
+
+            var requestOptions = {
+                method: 'DELETE',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:8000/api/topic.php", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+            loadData();
+        }
     }
 
     return (
@@ -118,22 +164,25 @@ const Topics = () => {
             </div>
 
             <div className="topics_edit_list">
-                <div>
-                    <div>
-                        <span>Тема:</span>
-                        <span>Хех</span>
+                {topicList !== null && topicList.map(t => (
+                    <div className="topics_edit_element" key={t.id}>
+                        <div>
+                            <span>Тема:</span>
+                            <span>{t['topic']}</span>
+                        </div>
+                        <div>
+                            <span>Учитель:</span>
+                            <span>{t['teacher']}</span>
+                        </div>
+                        <div>
+                            <span>Класс:</span>
+                            <span>{t['class']}</span>
+                        </div>
+                        <button topic_id={t.id} onClick={e => deleteTopic(e)}>Удалить</button>
                     </div>
-                    <div>
-                        <span>Учитель:</span>
-                        <span>Иванов Иван Иванович</span>
-                    </div>
-                    <div>
-                        <span>Класс:</span>
-                        <span>42</span>
-                    </div>
-                </div>
+                ))
+                }
             </div>
-
 
         </div>
     )

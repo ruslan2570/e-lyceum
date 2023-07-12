@@ -164,7 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             . "INNER JOIN class ON topic.class_id = class.id\n"
             . "LEFT JOIN student ON topic.student_id = student.id\n"
             . "WHERE\n"
-            . "    topic.student_id IS NULL;";
+            . "    topic.student_id IS NULL\n"
+            . "ORDER BY topic.id ASC";
     } else if ($params['show'] == "busy") {
         $topic_query = "SELECT\n"
             . "    topic.id as id,\n"
@@ -182,7 +183,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             . "INNER JOIN class ON topic.class_id = class.id\n"
             . "INNER JOIN student ON topic.student_id = student.id\n"
             . "WHERE\n"
-            . "    topic.student_id IS NOT NULL;";
+            . "    topic.student_id IS NOT NULL\n"
+            . "ORDER BY topic.id ASC";
     } else if (!isset($params['show']) || empty($params['show']) || $params['show'] == "all") {
         $topic_query = "SELECT\n"
             . "    topic.id as id,\n"
@@ -198,7 +200,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             . "    topic\n"
             . "INNER JOIN teacher ON topic.teacher_id = teacher.id\n"
             . "INNER JOIN class ON topic.class_id = class.id\n"
-            . "LEFT JOIN student ON topic.student_id = student.id;";
+            . "LEFT JOIN student ON topic.student_id = student.id\n"
+            . "ORDER BY topic.id ASC";
     }
 
     $topic_result = mysqli_query($link, $topic_query);
