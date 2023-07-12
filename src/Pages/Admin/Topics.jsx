@@ -74,7 +74,7 @@ const Topics = () => {
             redirect: 'follow'
         };
 
-        fetch("http://localhost:8000/api/topic.php", requestOptions)
+        fetch(ServerUrl + "topic.php", requestOptions)
             .then(response => {
                 if (response.status === 201) {
                     alert("Тема успешно добавлена");
@@ -82,16 +82,16 @@ const Topics = () => {
                     alert("При добавлении произошла ошибка");
                 }
             })
+            .then(() => loadData())
             .catch(error => console.log('error', error));
 
-        loadData();
         setTopicName("");
     }
 
     const deleteTopic = (e) => {
         const topic_id = e.target.getAttribute("topic_id");
         const topic = topicList.find(x => x.id === topic_id);
-        let confirmation = window.confirm(`Вы уверены, что освободить тему "${topic.topic}"?`);
+        let confirmation = window.confirm(`Вы уверены, что удалить тему "${topic.topic}"?`);
 
         if (confirmation) {
             const myHeaders = {
@@ -110,18 +110,23 @@ const Topics = () => {
                 redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/topic.php", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
+            fetch(ServerUrl + "topic.php", requestOptions)
+                .then(response => {
+                    if (response.status === 200) {
+                        alert("Тема успешно удалена")
+                    } else {
+                        alert("При удалении темы произошла ошибка ")
+                    }
+                })
+                .then(() => loadData())
                 .catch(error => console.log('error', error));
 
-            loadData();
         }
     }
 
     return (
-        <div className="topic_container">
-            <div className='add_topic_container'>
+        <div className="edit_container">
+            <div className='add_container'>
                 <h3>Создать тему</h3>
 
                 <div>
@@ -163,20 +168,17 @@ const Topics = () => {
 
             </div>
 
-            <div className="topics_edit_list">
+            <div className="edit_list">
                 {topicList !== null && topicList.map(t => (
-                    <div className="topics_edit_element" key={t.id}>
+                    <div className="edit_element" key={t.id}>
                         <div>
-                            <span>Тема:</span>
-                            <span>{t['topic']}</span>
+                            <span>Тема: {t['topic']}</span>
                         </div>
                         <div>
-                            <span>Учитель:</span>
-                            <span>{t['teacher']}</span>
+                            <span>Учитель: {t['teacher']}</span>
                         </div>
                         <div>
-                            <span>Класс:</span>
-                            <span>{t['class']}</span>
+                            <span>Класс: {t['class']}</span>
                         </div>
                         <button topic_id={t.id} onClick={e => deleteTopic(e)}>Удалить</button>
                     </div>

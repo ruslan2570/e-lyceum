@@ -8,7 +8,8 @@ import Login from './Pages/Login';
 import Admin from './Pages/Admin';
 import Main from './Pages/Admin/Main';
 import Topics from './Pages/Admin/Topics';
-
+import Teachers from './Pages/Admin/Teachers';
+import Funcs from './Pages/Admin/Funcs';
 
 function App() {
   return (
@@ -21,8 +22,8 @@ function App() {
       <Route path='/admin/*' element={<Admin />}>
         <Route path="" element={<Main />}></Route>
         <Route path="topics" element={<Topics />}></Route>
-        <Route path="teachers" element={<p>Учителя</p>}></Route>
-        <Route path="funcs" element={<p>Фунции</p>}></Route>
+        <Route path="teachers" element={<Teachers />}></Route>
+        <Route path="funcs" element={<Funcs />}></Route>
       </Route>
     </Routes>
   );
