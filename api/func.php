@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $headers = apache_request_headers();
     if (isset($headers['Authorization'])) {
         $authHeader = $headers['Authorization'];
-        
+
         // Извлечение токена из заголовка
         $token = str_replace('Bearer ', '', $authHeader);
     }
@@ -53,11 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $data = file_get_contents('php://input');
+    $params = json_decode($data, true);
+
 
     $headers = apache_request_headers();
     if (isset($headers['Authorization'])) {
         $authHeader = $headers['Authorization'];
-        
+
         // Извлечение токена из заголовка
         $token = str_replace('Bearer ', '', $authHeader);
     }
@@ -73,8 +76,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
         echo json_encode($response);
         exit();
-    } 
+    }
 
-    $delete_all_student_query = "DELETE FROM student";
-    mysqli_query($link, $delete_all_student_query);
+    if (isset($params['target'])) {
+        $delete_all_student_query = "DELETE FROM student";
+        mysqli_query($link, $delete_all_student_query);
+
+        switch ($params['target']) {
+            case 'students':
+                $delete_all_student_query = "DELETE FROM student";
+                mysqli_query($link, $delete_all_student_query);
+                break;
+
+            case 'topics':
+                $delete_all_topic_query = "DELETE FROM topic";
+                mysqli_query($link, $delete_all_topic_query);
+
+                $delete_all_teacher_query = "DELETE FROM teacher";
+                mysqli_query($link, $delete_all_teacher_query);
+
+                $delete_all_student_query = "DELETE FROM student";
+                mysqli_query($link, $delete_all_student_query);
+                break;
+
+            default:
+                http_response_code(400);
+                $response = [
+                    'error' => 'Неизвестная цель'
+                ];
+
+                echo json_encode($response);
+        }
+    } else {
+        http_response_code(400);
+        $response = [
+            'error' => 'Не указана цель для удаления'
+        ];
+
+        echo json_encode($response);
+    }
 }

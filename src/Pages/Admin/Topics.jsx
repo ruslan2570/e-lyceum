@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ServerUrl from '../../Const/ServerUrl';
 import AuthService from '../../Services/AuthService';
+import { findAllInRenderedTree } from 'react-dom/test-utils';
 
 const Topics = () => {
     const [teachersList, setTeachersList] = useState(null);
@@ -124,69 +125,101 @@ const Topics = () => {
         }
     }
 
+    let uploadFile;
+
+    function handleFile(){
+        uploadFile = this.files[0];
+        
+
+    }
+
+    const getTemplate = () => {
+        
+    }
+
+    
+    const uploadExcel = () => {
+
+        let fileInput = document.createElement('input');
+        fileInput.type = "file";
+        fileInput.accept = ".xls, .xlsx, .cvs";
+        fileInput.addEventListener("change", handleFile, false);
+        fileInput.click();
+
+        
+    }
+
+
     return (
-        <div className="edit_container">
-            <div className='add_container'>
-                <h3>Создать тему</h3>
-
-                <div>
-                    <label htmlFor="selectTeacher">Учитель</label>
-                    <select id='selectTeacher' onChange={e => onSelectedTeacher(e)}>
-                        <option className="list" key="">Выберите учителя</option>
-                        {teachersList !== null &&
-                            teachersList.map(t => (
-                                <option className="list" teacher_id={t['id']} key={t['id']}>{t['fullname']}</option>
-                            )
-                            )
-                        }
-                    </select>
-                </div>
-
-                <div>
-                    <label htmlFor="selectClass">Класс</label>
-                    <select id='selectClass' onChange={e => onSelectedClass(e)}>
-                        <option className="list" key="">Выберите класс</option>
-                        {classesList !== null &&
-                            classesList.map(c =>
-                            (
-                                <option className="list" class_id={c['id']} key={c['id']}>{c['value']}</option>
-                            )
-                            )
-                        }
-                    </select>
-                </div>
-
-                <div>
-                    <label htmlFor="topicName">Название темы</label>
-                    <input type='text' id="topicName" value={topicName} onChange={e => setTopicName(e.target.value)}></input>
-                </div>
-
-
-                <div>
-                    <button onClick={addTopic}>Создать тему</button>
-                </div>
-
+        <>
+            <div className='btn_excel_container'>
+                <button className='btn_excel' onClick={uploadExcel}>Загрузить из Excel</button>
+                <button className='btn_excel' onClick={getTemplate}>Скачать шаблон</button>
             </div>
+            <div className="edit_container">
 
-            <div className="edit_list">
-                {topicList !== null && topicList.map(t => (
-                    <div className="edit_element" key={t.id}>
-                        <div>
-                            <span>Тема: {t['topic']}</span>
-                        </div>
-                        <div>
-                            <span>Учитель: {t['teacher']}</span>
-                        </div>
-                        <div>
-                            <span>Класс: {t['class']}</span>
-                        </div>
-                        <button topic_id={t.id} onClick={e => deleteTopic(e)}>Удалить</button>
+                <div className='add_container'>
+                    <h3>Создать тему</h3>
+
+                    <div>
+                        <label htmlFor="selectTeacher">Учитель</label>
+                        <select id='selectTeacher' onChange={e => onSelectedTeacher(e)}>
+                            <option className="list" key="">Выберите учителя</option>
+                            {teachersList !== null &&
+                                teachersList.map(t => (
+                                    <option className="list" teacher_id={t['id']} key={t['id']}>{t['fullname']}</option>
+                                )
+                                )
+                            }
+                        </select>
                     </div>
-                ))
-                }
-            </div>
 
-        </div>
+                    <div>
+                        <label htmlFor="selectClass">Класс</label>
+                        <select id='selectClass' onChange={e => onSelectedClass(e)}>
+                            <option className="list" key="">Выберите класс</option>
+                            {classesList !== null &&
+                                classesList.map(c =>
+                                (
+                                    <option className="list" class_id={c['id']} key={c['id']}>{c['value']}</option>
+                                )
+                                )
+                            }
+                        </select>
+                    </div>
+
+                    <div>
+                        <label htmlFor="topicName">Название темы</label>
+                        <input type='text' id="topicName" value={topicName} onChange={e => setTopicName(e.target.value)}></input>
+                    </div>
+
+
+                    <div>
+                        <button onClick={addTopic}>Создать тему</button>
+                    </div>
+
+                </div>
+
+                <div className="edit_list">
+                    {topicList !== null && topicList.map(t => (
+                        <div className="edit_element" key={t.id}>
+                            <div>
+                                <span>Тема: {t['topic']}</span>
+                            </div>
+                            <div>
+                                <span>Учитель: {t['teacher']}</span>
+                            </div>
+                            <div>
+                                <span>Класс: {t['class']}</span>
+                            </div>
+                            <button topic_id={t.id} onClick={e => deleteTopic(e)}>Удалить</button>
+                        </div>
+                    ))
+                    }
+                </div>
+
+            </div>
+        </>
     )
 }
 

@@ -21,7 +21,7 @@ const Admin = () => {
                     <NavLink
                         className={({ isActive }) =>
                             isActive ? "active_navlink" : ""
-                        } to="/admin">Главная</NavLink>
+                        } to="/admin/">Главная</NavLink>
                     <NavLink className={({ isActive }) =>
                         isActive ? "active_navlink" : ""
                     } to="topics">Темы</NavLink>
@@ -33,10 +33,6 @@ const Admin = () => {
                     } to="funcs">Функции</NavLink>
                     <p className="link_logout" onClick={() => { logout() }}>Выход</p>
                 </nav>
-
-
-
-
             </div>
 
             <Outlet></Outlet>

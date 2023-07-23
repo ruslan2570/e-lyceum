@@ -93,6 +93,22 @@ th.th_down {
   display: flex;
 }
 
+.btn_excel_container{
+  display: flex;
+  padding: 0px;
+  margin: 0px;
+  justify-content: flex-end;
+  width: 25%;
+  margin-bottom: 25px;
+}
+
+.btn_excel{
+  border-radius: 15px;
+  background-color: #21A366;
+  border: solid 2px #10793F;
+  height: 35px;
+}
+
 .add_container {
   display: flex;
   flex-direction: column;
