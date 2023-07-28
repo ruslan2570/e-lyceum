@@ -127,17 +127,34 @@ const Topics = () => {
 
     let uploadFile;
 
-    function handleFile(){
+    function handleFile() {
         uploadFile = this.files[0];
-        
 
+        let formdata = new FormData();
+        formdata.append("file", uploadFile);
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch(ServerUrl + "import.php", requestOptions)
+            .then(response => {
+                if (response.status !== 200) {
+                    alert("Произошла ошибка");
+                }
+                return response.text()
+            })
+            .then(text => {if(text !== undefined) {console.log(text)}} )
+            .catch(error => console.log('error', error));
     }
 
     const getTemplate = () => {
-        
+
     }
 
-    
+
     const uploadExcel = () => {
 
         let fileInput = document.createElement('input');
@@ -146,9 +163,8 @@ const Topics = () => {
         fileInput.addEventListener("change", handleFile, false);
         fileInput.click();
 
-        
-    }
 
+    }
 
     return (
         <>
