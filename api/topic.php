@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Проверка токена
     if (!validateToken($token, $link)) {
-        
+
         // Токен не действителен, выполнение требуемых операций
         http_response_code(403);
         $response = [
@@ -48,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $add_topic_query = "INSERT INTO topic(name, teacher_id, class_id) VALUES ('$params[name]', '$params[teacher_id]', '$params[class_id]')";
         $result = mysqli_query($link, $add_topic_query);
 
-        if(!$result){
+        if (!$result) {
             $response = [
                 'error' => "Ошибка выполнения запроса: " . mysqli_error($link)
             ];
-            http_response_code(500);    
+            http_response_code(500);
         }
 
         http_response_code(201);
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $headers = apache_request_headers();
     if (isset($headers['Authorization'])) {
         $authHeader = $headers['Authorization'];
-        
+
         // Извлечение токена из заголовка
         $token = str_replace('Bearer ', '', $authHeader);
     }
@@ -147,7 +147,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // $params = json_decode($data, true);
     $params = $_GET;
 
-    if ($params['show'] == "available") {
+
+    if (isset($params['show']) && $params['show'] == "available") {
         $topic_query = "SELECT\n"
             . "    topic.id as id,\n"
             . "    class.value AS class,\n"
@@ -166,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             . "WHERE\n"
             . "    topic.student_id IS NULL\n"
             . "ORDER BY topic.id ASC";
-    } else if ($params['show'] == "busy") {
+    } else if (isset($params['show']) && $params['show'] == "busy") {
         $topic_query = "SELECT\n"
             . "    topic.id as id,\n"
             . "    class.value AS class,\n"
@@ -211,21 +212,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         // Извлечение данных и сохранение их в ассоциативном массиве
         $data = array();
         while ($row = mysqli_fetch_assoc($topic_result)) {
-            if(!isset($params['classes']) || empty($params['classes']) || $params['show'] == "all")
-            {
+            if (!isset($params['classes']) || empty($params['classes']) || $params['show'] == "all") {
                 $data[] = $row;
-            }
-            else if($params['classes'] == "high"){
-                if($row['class'] > 5){
+            } else if ($params['classes'] == "high") {
+                if ($row['class'] > 5) {
+                    $data[] = $row;
+                }
+            } else if ($params['classes'] = "low") {
+                if ($row['class'] <= 5) {
                     $data[] = $row;
                 }
             }
-            else if($params['classes'] = "low"){
-                if($row['class'] <= 5){
-                    $data[] = $row;
-                }
-            }
-                
         }
 
         // Преобразование данных в формат JSON
@@ -237,6 +234,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $response = [
             'error' => "Ошибка выполнения запроса: " . mysqli_error($link)
         ];
-        http_response_code(500);    
+        http_response_code(500);
     }
 }
