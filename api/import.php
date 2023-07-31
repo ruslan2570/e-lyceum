@@ -82,10 +82,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo 'Количество строк: ' . $rows_nums . '\n';
 
-    echo 'A' . $rows_nums + 1 . ':C' . $rows_nums;
+     echo 'A' . $rows_nums + 1 . ':C' . $rows_nums;
 
     $data_range = $worksheet->rangeToArray('A2' . ':C' . $rows_nums + 1);
-    print_r($data_range);
+     print_r($data_range);
 
     foreach ($data_range as $topic) {
         $topicName = $topic[0];
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    echo "echo from another world";
+    readfile("import.xlsx");
 }
 
 function teacher_exists($teacherName, $link)
@@ -171,7 +171,6 @@ function add_topic($topic, $link)
 
 function add_teacher($teacherName, $link)
 {
-
     // Проверяем, существует ли учитель с таким именем
     $sql = "SELECT id FROM teacher WHERE fullname = '$teacherName'";
     $result = $link->query($sql);

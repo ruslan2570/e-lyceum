@@ -156,7 +156,43 @@ const Topics = () => {
     }
 
     const getTemplate = () => {
+        const myHeaders = {
+            "Authorization": "Bearer " + AuthService.getToken()
+        }
 
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: myHeaders
+        };
+
+        fetch(ServerUrl + "import.php", requestOptions)
+            .then(response => {
+                if (response.status !== 200) {
+                    alert("Произошла ошибка");
+                }
+                return response.text()
+            })
+            .then(data => {
+
+                var file = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                if (window.navigator.msSaveOrOpenBlob) // IE10+
+                    window.navigator.msSaveOrOpenBlob(file, "import.xlsx");
+                else { // Others
+                    var a = document.createElement("a"),
+                            url = URL.createObjectURL(file);
+                    a.href = url;
+                    a.download = "import.xlsx";
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(function() {
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    }, 0);
+                }
+
+            } )
+            .catch(error => console.log('error', error));
     }
 
 
