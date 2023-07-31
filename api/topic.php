@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // // Получение токена из запроса
     // $token = $_SERVER['HTTP_AUTHORIZATION']; // Пример для токена в заголовке
 
+    $token = '';
     $headers = apache_request_headers();
     if (isset($headers['Authorization'])) {
         $authHeader = $headers['Authorization'];

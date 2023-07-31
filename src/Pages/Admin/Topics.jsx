@@ -130,13 +130,18 @@ const Topics = () => {
     function handleFile() {
         uploadFile = this.files[0];
 
+        const myHeaders = {
+            "Authorization": "Bearer " + AuthService.getToken()
+        }
+
         let formdata = new FormData();
         formdata.append("file", uploadFile);
 
         var requestOptions = {
             method: 'POST',
             body: formdata,
-            redirect: 'follow'
+            redirect: 'follow',
+            headers: myHeaders
         };
 
         fetch(ServerUrl + "import.php", requestOptions)
@@ -146,7 +151,7 @@ const Topics = () => {
                 }
                 return response.text()
             })
-            .then(text => {if(text !== undefined) {console.log(text)}} )
+            .then(text => {if(text !== undefined) {JSON.parse(text)}} )
             .catch(error => console.log('error', error));
     }
 
