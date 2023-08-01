@@ -6,7 +6,7 @@ import '../Styles/TopicsList.css';
 const TopicsList = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [topicsList, setTopicsList] = useState([]);
+    const [topicsList, setTopicsList] = useState(null);
 
     useEffect(() => {
 
@@ -38,7 +38,10 @@ const TopicsList = () => {
 
     return (
         <>
-            {topicsList.length !== 0 ? (
+            {topicsList === null && (
+                (<h1 className='title'>Загрузка тем...</h1>))}
+
+            {topicsList !== null && topicsList.length !== 0 && (
                 <>
                     <table className="table">
                         <tbody>
@@ -61,12 +64,13 @@ const TopicsList = () => {
                     </table>
 
                     <div className="button">
-                        <button className="button_regestration" onClick={() => navigate("/send", {state: {topicsList: topicsList}})}>Зарегистрироваться</button>
+                        <button className="button_regestration" onClick={() => navigate("/send", { state: { topicsList: topicsList } })}>Зарегистрироваться</button>
                     </div>
                 </>
-            )
-                : (<h1 className='title'>На данный момент нет доступных тем</h1>)
-            }
+            )}
+            {topicsList !== null && topicsList.length === 0 && (<h1 className='title'>На данный момент нет доступных тем</h1>)}
+
+
             < div className="down"></div>
         </>
     )
