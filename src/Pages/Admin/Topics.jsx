@@ -145,14 +145,29 @@ const Topics = () => {
         };
 
         fetch(ServerUrl + "import.php", requestOptions)
-            .then(response => {
-                if (response.status !== 200) {
-                    alert("Произошла ошибка");
-                }
-                return response.text()
-            })
-            .then(text => {if(text !== undefined) {JSON.parse(text)}} )
-            .catch(error => console.log('error', error));
+        .then((response) => {
+            if (!response.ok) {
+              // Если статус ответа не 200, преобразуем сообщение от сервера в JSON
+              return response.json().then((data) => {
+                throw new Error(data.error); // Вернуть ключ "error" из JSON в виде сообщения об ошибке
+              });
+            }
+            return "Темы успешно экспортированы"; // Вернуть сообщение об успешной экспорте
+          })
+          .then((message) => {
+            alert(message); // Вывести сообщение
+          })
+          .then(() => loadData())
+          .catch((error) => alert("При экспорте произошла ошибка: " + error.message));          
+
+            // .then(response => {
+            //     if (response.status !== 200) {
+            //         alert("Произошла ошибка");
+            //     }
+            //     return response.text()
+            // })
+            // .then(text => { if (text !== undefined) { console.log(text) } })
+            // .catch(error => console.log('error', error));
     }
 
     const getTemplate = () => {
@@ -167,32 +182,60 @@ const Topics = () => {
         };
 
         fetch(ServerUrl + "import.php", requestOptions)
-            .then(response => {
-                if (response.status !== 200) {
-                    alert("Произошла ошибка");
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Произошла ошибка при загрузке файла.");
                 }
-                return response.text()
+                return response.blob();
             })
-            .then(data => {
+            .then((blob) => {
+                // Создаем временный ссылочный объект (URL) для файла
+                const url = window.URL.createObjectURL(blob);
 
-                var file = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-                if (window.navigator.msSaveOrOpenBlob) // IE10+
-                    window.navigator.msSaveOrOpenBlob(file, "import.xlsx");
-                else { // Others
-                    var a = document.createElement("a"),
-                            url = URL.createObjectURL(file);
-                    a.href = url;
-                    a.download = "import.xlsx";
-                    document.body.appendChild(a);
-                    a.click();
-                    setTimeout(function() {
-                        document.body.removeChild(a);
-                        window.URL.revokeObjectURL(url);
-                    }, 0);
-                }
+                // Создаем ссылку на файл
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "import.xlsx";
 
-            } )
-            .catch(error => console.log('error', error));
+                // Добавляем ссылку на страницу и кликаем по ней, чтобы скачать файл
+                document.body.appendChild(a);
+                a.click();
+
+                // Удаляем ссылку и освобождаем ресурсы
+                window.URL.revokeObjectURL(url);
+                a.remove();
+            })
+            .catch((error) => {
+                console.error("Ошибка при скачивании файла: ", error.message);
+                alert("Произошла ошибка при скачивании файла.");
+            });
+            
+        // .then(response => {
+        //     if (response.status !== 200) {
+        //         alert("Произошла ошибка");
+        //     }
+        //     return response.text()
+        // })
+        // .then(data => {
+
+        //     var file = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+        //     if (window.navigator.msSaveOrOpenBlob) // IE10+
+        //         window.navigator.msSaveOrOpenBlob(file, "import.xlsx");
+        //     else { // Others
+        //         var a = document.createElement("a"),
+        //                 url = URL.createObjectURL(file);
+        //         a.href = url;
+        //         a.download = "import.xlsx";
+        //         document.body.appendChild(a);
+        //         a.click();
+        //         setTimeout(function() {
+        //             document.body.removeChild(a);
+        //             window.URL.revokeObjectURL(url);
+        //         }, 0);
+        //     }
+
+        // } )
+        // .catch(error => console.log('error', error));
     }
 
 

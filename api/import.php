@@ -16,7 +16,7 @@ $db_name = $config["db"];
 
 $link = mysqli_connect($db_host, $db_user, $db_password, $db_name);
 if ($link === false) {
-    http_response_code(403);
+    http_response_code(500);
     $response = [
         'error' => 'mysqli_connect_error()'
     ];
@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_FILES['file']['tmp_name'])) {
-        var_dump($_FILES);
         $file_name = $_FILES['file']['tmp_name'];
     } else {
         http_response_code(400);
@@ -80,12 +79,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    echo 'Количество строк: ' . $rows_nums . '\n';
+    if ($rows_nums === 0) {
+        http_response_code(400);
+        $response = [
+            'error' => 'Шаблон не заполнен'
+        ];
+    
+        echo json_encode($response);
+        exit();
+    }
 
-     echo 'A' . $rows_nums + 1 . ':C' . $rows_nums;
+    #echo 'Количество строк: ' . $rows_nums . '\n';
+
+    #echo 'A' . $rows_nums + 1 . ':C' . $rows_nums;
 
     $data_range = $worksheet->rangeToArray('A2' . ':C' . $rows_nums + 1);
-     print_r($data_range);
+    //print_r($data_range);
 
     foreach ($data_range as $topic) {
         $topicName = $topic[0];
@@ -93,8 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $topicClass = $topic[2];
 
         $is_teacher_exists = teacher_exists($teacherName, $link);
-
-        var_dump($is_teacher_exists);
 
         if ($is_teacher_exists) {
             add_topic($topic, $link);
@@ -106,8 +113,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    header("Cache-Control: public");
+    header("Content-Description: File Transfer");
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header("Content-Transfer-Encoding: binary");
+    header("Content-Disposition: attachment; filename='import.xlsx'");
 
     readfile("import.xlsx");
+
+    exit;
 }
 
 function teacher_exists($teacherName, $link)
