@@ -2,6 +2,7 @@ import { Outlet, useNavigate, NavLink } from "react-router-dom";
 import '../Styles/Admin.css';
 import logo from '../img/stupeni.png';
 import AuthService from "../Services/AuthService";
+import { useEffect, useCallback } from "react";
 
 const Admin = () => {
     const navigate = useNavigate();
@@ -10,6 +11,17 @@ const Admin = () => {
         AuthService.logout();
         navigate("/login");
     }
+
+    const checkAuth = useCallback( async() => {
+        const result = await AuthService.isAuthenticated();
+        if(!result){
+            navigate("/login");
+        }
+    }, [navigate]);
+
+    useEffect(() => {
+        checkAuth();
+    },[checkAuth, logout])
 
     return (
         <div className="admin_wrap">

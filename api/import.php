@@ -6,7 +6,12 @@ require_once('../token_validator.php');
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
+
+
 $config = include '../db_config.php';
+
+set_time_limit(260);
+ini_set('memory_limit', '512M');
 
 // Подключение к БД
 $db_host = $config["host"];

@@ -88,7 +88,7 @@ const Funcs = () => {
             fetch(ServerUrl + "func.php", requestOptions)
                 .then(response => {
                     if (response.status === 200) {
-                        alert("Ученики успешно удалены")
+                        alert("Все темы удалены")
                     } else {
                         alert("При удалении тем произошла ошибка ")
                     }

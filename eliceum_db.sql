@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jul 12, 2023 at 09:41 PM
+-- Generation Time: Aug 01, 2023 at 05:36 PM
 -- Server version: 8.0.32
 -- PHP Version: 8.1.15
 
@@ -31,7 +31,7 @@ CREATE TABLE `admin` (
   `id` int NOT NULL,
   `login` varchar(64) NOT NULL,
   `password` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
@@ -49,7 +49,7 @@ INSERT INTO `admin` (`id`, `login`, `password`) VALUES
 CREATE TABLE `class` (
   `id` int NOT NULL,
   `value` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `class`
@@ -79,7 +79,7 @@ CREATE TABLE `session` (
   `token` varchar(32) NOT NULL,
   `user_id` int NOT NULL,
   `expiration_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `session`
@@ -87,7 +87,35 @@ CREATE TABLE `session` (
 
 INSERT INTO `session` (`id`, `token`, `user_id`, `expiration_date`) VALUES
 (869, '8053a9f580cb351e590a240abb93d629', 1, '2023-08-10'),
-(870, 'fb8728b40f7e4e32701140d7687d9358', 1, '2023-08-10');
+(870, 'fb8728b40f7e4e32701140d7687d9358', 1, '2023-08-10'),
+(871, '0c169fce0e5387dffd9432df51feb9f3', 1, '2023-08-10'),
+(872, '8dff559fc34241e6e5b599d449f9ec28', 1, '2023-08-10'),
+(873, 'a3d57c7f5073c78680827396452ae870', 1, '2023-08-10'),
+(874, '015cc8cadb408d6efea96a58aeccbba3', 1, '2023-08-10'),
+(875, '6cc3070c2675f1afc8ae2801fba2ab23', 1, '2023-08-10'),
+(876, 'ec49df1cf71c29f6bc9fad33f557888a', 1, '2023-08-10'),
+(877, '4339c68fda6f2a63e4356d5c4d1eae9f', 1, '2023-08-10'),
+(878, '2932a28f888cbcbcbdc0ea0ddc850daf', 1, '2023-08-10'),
+(879, 'ed5d13686d73325c70eb2fc9e80489b1', 1, '2023-08-10'),
+(880, '147c3599503c0b4a1eb1f93dffd11d9f', 1, '2023-08-10'),
+(881, 'df5755384dbf0e18ae467e19e77eeadf', 1, '2023-08-10'),
+(882, 'eb15dcaf37e0b46d90145e41174669a1', 1, '2023-08-18'),
+(883, '18f0b20bfed0f637a248a62fc4c6d0db', 1, '2023-08-28'),
+(884, '97c95146bea083cee749aedd0f2fb2ea', 1, '2023-08-29'),
+(885, '8c8185fcd7011284427a8fe862b27907', 1, '2023-08-29'),
+(886, 'bf59fd330a1b2d453e92a249ebbcb4a9', 1, '2023-08-29'),
+(887, 'd8844f33567c146eb27b1a547515c7c2', 1, '2023-08-29'),
+(888, '3f941847cdf08f7fc869493e8d3cdd02', 1, '2023-08-29'),
+(889, 'f75eedb27a030e4b9455c0492a2dda0e', 1, '2023-08-29'),
+(890, 'd8e6e4dd81fe30a81b00057dc1861291', 1, '2023-08-29'),
+(891, '64e568130941bc20936759c9eebbaef7', 1, '2023-08-29'),
+(892, '53beb830b05523fcb39925c0d8d466d9', 1, '2023-08-29'),
+(893, '82fb480e6b3f2b8605cc3132009a36e6', 1, '2023-08-29'),
+(894, 'cb70dbf023225c90375352310813e37e', 1, '2023-08-29'),
+(895, 'c5c2472041c23ee64edb299a44590e61', 1, '2023-08-29'),
+(896, 'c716e4c26c907a6c54147f28c1b112ab', 1, '2023-08-29'),
+(897, '74a3f66ec9d118f81328843c3c23a533', 1, '2023-08-29'),
+(898, '7746afcb2d16ce6dbd2c11e8c751d5c8', 1, '2023-08-29');
 
 -- --------------------------------------------------------
 
@@ -98,15 +126,15 @@ INSERT INTO `session` (`id`, `token`, `user_id`, `expiration_date`) VALUES
 CREATE TABLE `setting` (
   `id` int NOT NULL,
   `property` varchar(64) NOT NULL,
-  `content` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `content` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `setting`
 --
 
 INSERT INTO `setting` (`id`, `property`, `content`) VALUES
-(1, 'user_password', '1234');
+(1, 'user_password', '234');
 
 -- --------------------------------------------------------
 
@@ -120,15 +148,7 @@ CREATE TABLE `student` (
   `lastname` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `login` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `class_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `student`
---
-
-INSERT INTO `student` (`id`, `firstname`, `lastname`, `login`, `class_id`) VALUES
-(34, 'Роман', 'Кочетков', 'kochan', 3),
-(35, 'Анатолий', 'Царёв', 'plasticine', 4);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Triggers `student`
@@ -151,18 +171,7 @@ DELIMITER ;
 CREATE TABLE `teacher` (
   `id` int NOT NULL,
   `fullname` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `teacher`
---
-
-INSERT INTO `teacher` (`id`, `fullname`) VALUES
-(1, 'Иванова Мария Ивановна'),
-(2, 'Петрова Татьяна Владимировна'),
-(6, 'Скуратова Ольга Викторовна'),
-(8, 'Митрофанова Ольга Викторовна'),
-(10, 'Джонатан Стетхэм');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -177,25 +186,7 @@ CREATE TABLE `topic` (
   `student_id` int DEFAULT NULL,
   `class_id` int NOT NULL,
   `selection_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `topic`
---
-
-INSERT INTO `topic` (`id`, `name`, `teacher_id`, `student_id`, `class_id`, `selection_date`) VALUES
-(1, 'Развитие краткосрочного кредитования в комерческом банке', 1, NULL, 1, NULL),
-(2, 'Порядок работы с сомнительными, неплатежеспособными и имеющими признаки подделки денежными знаками Банка России в кредитных организациях ', 1, NULL, 1, NULL),
-(3, 'Проектирование архитектуры высоконагруженных приложений', 2, NULL, 1, NULL),
-(4, 'Программирование микроконтроллеров STM32', 2, 34, 3, '2023-07-12 21:06:11'),
-(5, 'Проектирование парты', 2, NULL, 4, NULL),
-(6, 'Самые необычные театры в Москве', 8, NULL, 4, NULL),
-(7, 'По следам Шерлока Холмса, или методы решения логических задач', 2, NULL, 4, NULL),
-(8, 'Гастрономическая Москва', 1, NULL, 2, NULL),
-(16, '\"Панки хой!\" или как зарождался тамбовский панк-рок', 1, 35, 3, '2023-07-11 00:39:47'),
-(17, 'Промизы в JS', 6, NULL, 5, NULL),
-(23, 'Самые известные цитаты Джонатана Стетхэма', 10, NULL, 4, NULL),
-(24, 'Загрузка сайта на хостинг', 10, NULL, 12, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Triggers `topic`
@@ -280,7 +271,7 @@ ALTER TABLE `class`
 -- AUTO_INCREMENT for table `session`
 --
 ALTER TABLE `session`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=871;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=899;
 
 --
 -- AUTO_INCREMENT for table `setting`
@@ -292,19 +283,19 @@ ALTER TABLE `setting`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `topic`
 --
 ALTER TABLE `topic`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

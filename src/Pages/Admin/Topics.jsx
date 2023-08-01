@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import ServerUrl from '../../Const/ServerUrl';
 import AuthService from '../../Services/AuthService';
-import { findAllInRenderedTree } from 'react-dom/test-utils';
 
 const Topics = () => {
     const [teachersList, setTeachersList] = useState(null);
