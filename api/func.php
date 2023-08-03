@@ -97,6 +97,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
                 $delete_all_student_query = "DELETE FROM student";
                 mysqli_query($link, $delete_all_student_query);
+
+                $set_autoincrement_query = "ALTER TABLE topic AUTO_INCREMENT=0;";
+                mysqli_query($link, $set_autoincrement_query);
                 break;
 
             default:

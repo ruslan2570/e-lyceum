@@ -7,7 +7,7 @@ const Main = () => {
   const [selectedShow, setSelectedShow] = useState(null);
   const [topics, setTopics] = useState([]);
 
-  const makeFree = async(e) => {
+  const makeFree = async (e) => {
     let topic = topics.find(x => x.id == e.target.getAttribute('topic_id'));
 
     let confirmation = window.confirm(`Вы уверены, что освободить тему "${topic.topic}"?`);
@@ -17,7 +17,7 @@ const Main = () => {
       // myHeaders.append("Content-Type", "application/json");
       // myHeaders.append("Authorization", "Bearer " + AuthService.getToken());
 
-      
+
       var myHeaders = {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + AuthService.getToken()
@@ -33,18 +33,18 @@ const Main = () => {
         redirect: 'follow'
       };
 
-      try{
+      try {
         let response = await fetch(ServerUrl + "topic.php", requestOptions);
         // alert(response.status);
-        if(response.status === 200){
+        if (response.status === 200) {
           alert("Тема освобождена");
-        } else{
+        } else {
           alert("Произошла ошибка");
         }
-      } catch(error){
+      } catch (error) {
         console.log("Произошла ошибка: ", error);
       }
-      
+
       updateTopics(selectedShow);
     }
   }
@@ -90,13 +90,59 @@ const Main = () => {
     console.log("Use effect");
   }, []);
 
+
+  const downloadExcel = () => {
+    const myHeaders = {
+      "Authorization": "Bearer " + AuthService.getToken()
+    }
+
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+      headers: myHeaders
+    };
+
+    fetch(ServerUrl + "export.php", requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Произошла ошибка при загрузке файла.");
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        // Создаем временный ссылочный объект (URL) для файла
+        const url = window.URL.createObjectURL(blob);
+
+        // Создаем ссылку на файл
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Выгрузка " + new Date().toLocaleDateString("ru-RU") + ".xlsx";
+
+        // Добавляем ссылку на страницу и кликаем по ней, чтобы скачать файл
+        document.body.appendChild(a);
+        a.click();
+
+        // Удаляем ссылку и освобождаем ресурсы
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      })
+      .catch((error) => {
+        console.error("Ошибка при скачивании файла: ", error.message);
+        alert("Произошла ошибка при скачивании файла.");
+      });
+  }
+
+
   return (
     <>
-      <select value={selectedShow} onChange={e => setSelectedShow(e.target.value)} className='select_show'>
-        <option value="all">Все</option>
-        <option value="busy">Занятые</option>
-        <option value="available">Свободные</option>
-      </select>
+      <div className='btn_excel_container'>
+        <select value={selectedShow} onChange={e => setSelectedShow(e.target.value)} className='select_show'>
+          <option value="all">Все</option>
+          <option value="busy">Занятые</option>
+          <option value="available">Свободные</option>
+        </select>
+        <button className='btn_excel' onClick={downloadExcel}>Экспортировать в Excel</button>
+      </div>
 
       {topics != null && topics.length !== 0 &&
         <div>
